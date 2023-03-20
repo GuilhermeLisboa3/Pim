@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Agendamento </title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../Css/telaAgendamento.css'>
+ 
+</head>
+
+<body>
+	<div class="container">
+        <h1>Escola Vencer Sempre</h1>
+		<h2>Agendamento</h2>
+		<form>
+			<label for="nome">Nome do Colaborador:</label>
+			<input type="text" id="nome" name="nome" required placeholder="Digite seu nome">
+
+            
+            
+
+            <label for="equipamento">Qual Equipamento deseja Reservar:</label>
+            <select type="equipamento" id="equipamento" name="equipamento" required>
+                <option value="">Selecione o equipamento</option>
+                <option value="notebook">Notebook</option>
+                <option value="projetor">Projetor</option>
+                <option value="caixa-de-som">Caixa de som</option>
+                <option value="televisao">Televisão</option>
+                <option value="dvd">DVD</option>
+            </select>
+
+			<label for="data">Data da Reserva:</label>
+			<input type="date" id="data" name="data" required>
+
+			<label for="horario">Horário da Reserva:</label>
+			<input type="time" id="horario" name="horario" required>
+
+			<input type="submit" value="Agendar">
+            
+		</form>
+	</div>
+</body>
+</html>
+<script>
+    class Agendamento {
+  constructor(nome, data, equipamento,horario) {
+    this.nome = nome;
+    this.data = data;
+    this.equipamento = equipamento
+    this.horario = horario
+  }
+
+  salvarNoLocalStorage() {
+    const agendamentos = JSON.parse(localStorage.getItem('agendamentos')) || [];
+    agendamentos.push({ nome: this.nome, data: this.data , equipamento: this.equipamento , horario: this.horario});
+    localStorage.setItem('agendamentos', JSON.stringify(agendamentos));
+  }
+}
+
+const form = document.querySelector('form')
+form.addEventListener('submit',(event)=>{
+  event.preventDefault();
+
+  const nome = document.querySelector('#nome').value;
+  const data = document.querySelector('#data').value;
+  const equipamento = document.getElementById('equipamento').value
+  const horario = document.getElementById('horario').value
+
+  const agendamento = new Agendamento(nome, data, equipamento,horario);
+  agendamento.salvarNoLocalStorage();
+
+
+  alert('Agendamento salvo com sucesso!');
+  form.reset();
+
+  window.location.href ="informacoesAgendamento.html"
+})
+
+</script>
+</body>
+
+</html>

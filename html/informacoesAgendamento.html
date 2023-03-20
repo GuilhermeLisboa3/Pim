@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Visualização Agendamento</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../Css/informações.css'>
+   
+</head>
+<body>
+    <div class="container"  id="informacoes">
+        <h1>Escola Vencer Sempre</h1>
+        <h2>Datas Indisponíveis</h2>
+        <div class="informacoes">
+            <div class="nome" id="nome">
+                
+            </div>
+            <div class="produto" id ="produto">
+               
+            </div>
+            <div class="data" id = "data">
+               
+            </div>
+            <div class ="horario" id ="horario">
+                
+            </div>
+        </div>
+        <form>
+            <input type="button" onclick=sair() value="Sair">
+        </form>
+    </div>
+</body>
+<script>
+    const agendamentos = JSON.parse(localStorage.getItem('agendamentos')) || [];
+
+    function sair (){
+        window.location.href='agendamento.html'
+    }
+
+    function informacoes() {
+    agendamentos.forEach(({ nome, data, equipamento, horario }) => {
+  // cria uma nova div para o agendamento atual
+  const agendamentoDiv = document.createElement('div');
+  agendamentoDiv.classList.add('agendamento');
+
+  // cria elementos HTML para exibir as informações do agendamento
+  const nomeElem = document.createElement('p');
+  nomeElem.textContent = `Nome: ${nome}`;
+  const equipamentoElem = document.createElement('p');
+  equipamentoElem.textContent = `Equipamento: ${equipamento}`;
+  const dataElem = document.createElement('p');
+  dataElem.textContent = `Data: ${data}`;
+  const horarioElem = document.createElement('p');
+  horarioElem.textContent = `Horário: ${horario}`;
+
+  // adiciona os elementos HTML à div do agendamento
+  agendamentoDiv.appendChild(nomeElem);
+  agendamentoDiv.appendChild(equipamentoElem);
+  agendamentoDiv.appendChild(dataElem);
+  agendamentoDiv.appendChild(horarioElem);
+
+  // adiciona a div do agendamento à página
+  const informacoesDiv = document.querySelector('#informacoes .informacoes');
+  informacoesDiv.appendChild(agendamentoDiv);
+});
+
+
+
+}
+
+    informacoes()
+
+
+</script>
+</html>

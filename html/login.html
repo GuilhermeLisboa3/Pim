@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>Login Colaborador</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='stylesheet' type='text/css' media='screen' href='../Css/login.css'>
+    
+    </head>
+
+    <body> 
+        <div class="container">
+            <h1>Escola Vencer Sempre</h1>
+            <h2>Faça seu Login</h2>
+            <form>
+                <label for="usuario">Usuário:</label>
+                <input type="text" id="usuario" name="usuario" required placeholder="Digite o e-mail cadastrado">
+
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" required placeholder="******">
+
+                <input type="submit" value="Entrar">
+            </form>
+        </div>
+    </body>
+    <script>
+        class Login {
+                constructor(nome, senha) {
+                    this.nome = nome;
+                    this.senha = senha;
+                }
+
+                verificarCredenciais() {
+                    if (this.nome === 'admin' && this.senha === '1234') {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const usuario = document.querySelector('#usuario').value;
+                const senha = document.querySelector('#senha').value;
+
+                const login = new Login(usuario, senha);
+
+                if (login.verificarCredenciais()) {
+                    alert('Login realizado com sucesso!');
+                    window.location.href='agendamento.html'
+                    // redirecionar para página restrita
+                } else {
+                    alert('Usuário ou senha inválidos!');
+                }
+            });
+        </script>
+</html>
+
