@@ -14,8 +14,8 @@
             <h1>Escola Vencer Sempre</h1>
             <h2>Faça seu Login</h2>
             <form>
-                <label for="usuario">Usuário:</label>
-                <input type="text" id="usuario" name="usuario" required placeholder="Digite o e-mail cadastrado">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Digite o e-mail cadastrado">
 
                 <label for="senha">Senha:</label>
                 <input type="password" id="senha" name="senha" required placeholder="******">
@@ -26,29 +26,31 @@
     </body>
     <script>
         class Login {
-                constructor(nome, senha) {
-                    this.nome = nome;
+                constructor(email, senha) {
+                    this.email = email;
                     this.senha = senha;
                 }
 
-                verificarCredenciais() {
-                    if (this.nome === 'admin' && this.senha === '1234') {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                verificarUsuario(){
+                    const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+
+                    const usuario = usuarios.find(usuario => usuario.email === this.email && usuario.senha === this.senha)
+                    if (usuario){
+                        return true 
+                    } else { return false }
                 }
+
             }
 
             const form = document.querySelector('form');
             form.addEventListener('submit', function (event) {
                 event.preventDefault();
-                const usuario = document.querySelector('#usuario').value;
+                const email = document.querySelector('#email').value;
                 const senha = document.querySelector('#senha').value;
 
-                const login = new Login(usuario, senha);
+                const login = new Login(email, senha);
 
-                if (login.verificarCredenciais()) {
+                if (login.verificarUsuario()) {
                     alert('Login realizado com sucesso!');
                     window.location.href='agendamento.html'
                     // redirecionar para página restrita

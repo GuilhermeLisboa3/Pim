@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>Login Colaborador</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='stylesheet' type='text/css' media='screen' href='../Css/login.css'>
+    
+    </head>
+
+    <body> 
+        <div class="container">
+            <h1>Escola Vencer Sempre</h1>
+            <h2>Faça seu Cadastro</h2>
+            <form>
+                <label for="usuario">Nome:</label>
+                <input type="text" id="usuario" name="usuario" required placeholder="Digite o seu nome" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="*****@****.com" required>
+
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" required placeholder="******" required>
+
+                <input type="submit" value="Entrar">
+            </form>
+        </div>
+    </body>
+    <script>
+        class Cadastro {
+                constructor(nome, senha, email) {
+                    this.nome = nome;
+                    this.senha = senha;
+                    this.email = email;
+                }
+
+                existEmail(emailUser){
+                    const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+
+                    usuarios.forEach(({ email }) => {
+                        if(email === emailUser){
+                            return true
+                        } else { return false}
+                    })
+                }
+
+                salvarNoLocalStorage() {
+                    const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+                    usuarios.push({ nome: this.nome, senha: this.senha, email: this.email});
+                    localStorage.setItem('usuarios', JSON.stringify(usuarios));
+                }
+            }
+
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const usuario = document.querySelector('#usuario').value;
+                const senha = document.querySelector('#senha').value;
+                const email = document.querySelector('#email').value;
+
+                const cadastro = new Cadastro(usuario, senha, email);
+
+                if (!cadastro.existEmail(email)) {
+                    cadastro.salvarNoLocalStorage()
+                    alert('Cadastro realizado com sucesso!');
+                    window.location.href='login.html'
+                    // redirecionar para página restrita
+                } else {
+                    alert('Email já existe, utilize outro');
+                }
+            });
+        </script>
+</html>
+
