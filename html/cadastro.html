@@ -35,14 +35,13 @@
                     this.email = email;
                 }
 
-                existEmail(emailUser){
+                existEmail(){
                     const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
 
-                    usuarios.forEach(({ email }) => {
-                        if(email === emailUser){
-                            return true
-                        } else { return false}
-                    })
+                    const usuario = usuarios.find(usuario => usuario.email === this.email )
+                    if (usuario){
+                        return true 
+                    } else { return false }
                 }
 
                 salvarNoLocalStorage() {
@@ -61,7 +60,7 @@
 
                 const cadastro = new Cadastro(usuario, senha, email);
 
-                if (!cadastro.existEmail(email)) {
+                if (!cadastro.existEmail()) {
                     cadastro.salvarNoLocalStorage()
                     alert('Cadastro realizado com sucesso!');
                     window.location.href='login.html'
